@@ -1,0 +1,54 @@
+// _sass/_navbar.scss
+
+// Estilo inicial (en la parte superior)
+#mainNavbar {
+  background-color: transparent;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(0px); // opcional, para efecto glass
+
+  .navbar-brand {
+    .brand-sector { color: #ffffff; }
+    .brand-once { color: #f0f0f0; }
+  }
+
+  .nav-link,
+  .navbar-toggler-icon {
+    color: rgba(255, 255, 255, 0.9) !important;
+  }
+
+  .btn-outline-light {
+    border-color: rgba(255, 255, 255, 0.7);
+    color: white;
+    &:hover {
+      background-color: white;
+      color: #1570ef;
+    }
+  }
+}
+
+// Estilo al hacer scroll
+#mainNavbar.scrolled {
+  background-color: rgb(0, 0, 0);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding-top: 0.6rem;
+  padding-bottom: 0.6rem;
+
+  .navbar-brand {
+    .brand-sector { color: #1570ef; } // color primary de Bootstrap
+    .brand-once { color: #333; }
+  }
+
+  .nav-link,
+  .navbar-toggler-icon {
+    color: rgba(255, 255, 255, 0.75) !important;
+  }
+
+  .btn-outline-light {
+    border-color: #1570ef;
+    color: #1570ef;
+    &:hover {
+      background-color: #1570ef;
+      color: white;
+    }
+  }
+}

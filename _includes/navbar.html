@@ -1,0 +1,47 @@
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg  fixed-top shadow-sm " id="mainNavbar">
+  <div class="container ">
+    <!-- Logo / Nombre -->
+    <a class="navbar-brand fw-bold" href="{{ '/' | relative_url }}">
+      <img src="/assets/images/logos/S11-LOGO.webp" class="img-fluid" height="30" width="50" alt="">
+    </a>
+
+    <!-- Botón colapsable en móvil -->
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Enlaces -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto ">
+        <li class="nav-item">
+          <a class="nav-link text-white" href="{{ '/' | relative_url }}">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="{{ '/menus-qr.html' | relative_url }}">Menú QR</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="{{ '/invitaciones.html' | relative_url }}">Invitaciones</a>
+        </li>
+
+      </ul>
+      <!-- WhatsApp (siempre visible, incluso en móvil) -->
+      <a
+        href="https://wa.me/521234567890?text=Hola,%20quiero%20un%20diseño%20digital"
+        target="_blank"
+        class="btn btn-success ms-lg-3 mt-2 mt-lg-0"
+        aria-label="Contactar por WhatsApp"
+      >
+        <i class="bi bi-whatsapp"></i> WhatsApp
+      </a>
+    </div>
+  </div>
+</nav>

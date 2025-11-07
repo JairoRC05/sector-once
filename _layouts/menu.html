@@ -1,0 +1,255 @@
+---
+layout: default
+---
+
+
+<main class="main-content">
+
+  <div class="position-relative overflow-hidden mb-4" style="height: 280px; background: #f5f5f5;">
+    {% if page.foto_local %}
+    <img src="/assets/menus/local/{{page.foto_local}}.webp" alt="{{ page.title }}"
+      class="w-100 h-100 object-fit-cover position-absolute top-0 start-0">
+    {% else %}
+    <div class="w-100 h-100 bg-primary opacity-25"></div>
+    {% endif %}
+
+    <!-- Overlay de texto -->
+    <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center"
+      style="background: rgba(0,0,0,0.4);">
+      <div class="container text-white p-4">
+        <div class="row align-items-center">
+          <div class="col-md-6 col-lg-5">
+            {% if page.logo %}
+            <img src="{{ page.logo }}" alt="{{ page.title }}" class="" style="max-height: 200px; object-fit: contain;">
+            {% else %}
+            <h1 class="display-5 fw-bold mb-2">{{ page.title }}</h1>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <section id="ubicacion" class="tab-content ">
+    <h2>Ubicación</h2>
+    <p>C. 406 Manzana 61 Lote 7, Morelos 1ra Sección, 62790 U.H. José María Morelos y Pavón, Mor.</p>
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d944.1077910631478!2d-99.25731083734587!3d18.823487211055664!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2s!5e0!3m2!1ses!2smx!4v1762530265195!5m2!1ses!2smx"
+      width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"></iframe>
+  </section>
+
+  <!-- Sección 2: Contacto -->
+  <section id="contacto" class="tab-content">
+    <h2>Contacto</h2>
+    <p>Atención solo por llamada y WhatsApp. </p>
+    <p>Sin servicio a domicilio.</p>
+    <a href="tel:+521234567890" class="btn-contacto">
+      <i class="bi bi-telephone-fill"></i>
+      Llamar ahora
+    </a>
+
+  </section>
+
+  <!-- Sección 3: Menú -->
+  <section id="menu" class="tab-content active">
+    <div id="menu-contenedor">
+      <div class="text-center">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Cargando...</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contenedor scrollable para la paginación -->
+    <div class="menu-pagination-wrapper">
+      <div id="menu-pagination" class="menu-pagination"></div>
+    </div>
+  </section>
+
+  <!-- Sección 4: Horario -->
+  <section id="horario" class="tab-content">
+    <h2>Atendemos:</h2>
+    <p>Todos los días de 6:00 PM a 11:00 PM</p>
+  </section>
+
+  <!-- Sección 5: Galería -->
+  <section id="galeria" class="tab-content">
+    <h2>Galería</h2>
+    <p>Próximanente</p>
+  </section>
+
+
+</main>
+
+<!-- Barra de navegación fija en la parte inferior -->
+<nav class="navbar-fixed-bottom">
+  <ul class="nav category-tabs justify-content-between px-2 py-2">
+    <li class="nav-item arc-level-2">
+      <a class="nav-link" href="#ubicacion" data-target="ubicacion"><i
+          class="bi bi-geo-alt"></i><span>Ubicación</span></a>
+    </li>
+    <li class="nav-item arc-level-1">
+      <a class="nav-link" href="#contacto" data-target="contacto">
+        <i class="bi bi-telephone-fill"></i><span>Contacto</span></a>
+    </li>
+    <li class="nav-item arc-level-0">
+      <a class="nav-link active" href="#menu" data-target="menu"><i class="bi bi-grid"></i><span>Menú</span></a>
+    </li>
+    <li class="nav-item arc-level-1">
+      <a class="nav-link" href="#horario" data-target="horario"><i class="bi bi-clock"></i><span>Horario</span></a>
+    </li>
+    <li class="nav-item arc-level-2">
+      <a class="nav-link" href="#galeria" data-target="galeria"><i class="bi bi-images"></i><span>Galería</span></a>
+    </li>
+  </ul>
+</nav>
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const links = document.querySelectorAll('.category-tabs .nav-link');
+    const contents = document.querySelectorAll('.tab-content');
+
+    links.forEach(link => {
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        // 1. Remover clase 'active' de todos los enlaces
+        links.forEach(l => l.classList.remove('active'));
+        // 2. Añadir 'active' al enlace clickeado
+        this.classList.add('active');
+
+        // 3. Ocultar todas las secciones
+        contents.forEach(section => section.classList.remove('active'));
+
+        // 4. Mostrar la sección correspondiente
+        const targetId = this.getAttribute('data-target');
+        const targetSection = document.getElementById(targetId);
+        if (targetSection) {
+          targetSection.classList.add('active');
+        }
+      });
+    });
+
+    // Opcional: Mostrar sección "Menú" al cargar (por defecto)
+    document.getElementById('menu').classList.add('active');
+  });
+</script>
+
+<script>
+  const menuPageID = {{ page.ID | jsonify }};
+  const jsonURL = `/assets/menus/${menuPageID}.json`;
+
+  fetch(jsonURL)
+    .then(response => {
+      if (!response.ok) throw new Error(`Menú no encontrado (${response.status})`);
+      return response.json();
+    })
+    .then(data => {
+      if (!data || !data.activo) {
+        document.getElementById('menu-contenedor').innerHTML =
+          `<div class="alert alert-warning text-center">Menú temporalmente desactivado</div>`;
+        return;
+      }
+
+      const secciones = data.secciones || [];
+      if (secciones.length === 0) {
+        document.getElementById('menu-contenedor').innerHTML =
+          `<div class="alert alert-info text-center">No hay secciones</div>`;
+        return;
+      }
+
+      // --- Generar HTML del carrusel ---
+      let slidesHTML = '';
+      secciones.forEach(sec => {
+        const productosHTML = sec.productos.map(prod => `
+          <div class="producto py-2">
+            <div class="row align-items-center g-2">
+              <div class="col">
+                <div class="nombre fw-medium">${prod.nombre}</div>
+                ${prod.descripcion ? `<div class="descripcion text-muted small mt-1">${prod.descripcion}</div>` : ''}
+              </div>
+              <div class="col-auto text-end">
+                <div class="precio fw-bold text-orange">$${parseFloat(prod.precio).toFixed(2)}</div>
+              </div>
+            </div>
+          </div>
+        `).join('');
+
+        slidesHTML += `
+          <div class="splide__slide">
+            <div class="card border-0 ">
+              <div class="card-header bg-white border-0">
+                <h2 class="mb-0">${sec.nombre_seccion}</h2>
+              </div>
+              <div class="card-body p-0" style="max-height: 50vh; overflow-y: auto;">
+                <div>
+                  ${productosHTML}
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+
+      document.getElementById('menu-contenedor').innerHTML = `
+        <div class="splide" id="menu-splide">
+          <div class="splide__track">
+            <ul class="splide__list">
+              ${slidesHTML}
+            </ul>
+          </div>
+        </div>
+      `;
+
+      // --- Inicializar Splide ---
+      const splide = new Splide('#menu-splide', {
+        type: 'slide',
+        perPage: 1,
+        perMove: 1,
+        pagination: false, // ✅ Desactivamos la paginación automática
+        arrows: false, // Solo flechas si hay más de 1 sección
+        drag: true,
+        wheel: false,
+        keyboard: true,
+        gap: '1rem',
+      });
+
+      // --- Paginación personalizada: nombres de secciones como botones ---
+      splide.on('mounted move', () => {
+        const paginationEl = document.getElementById('menu-pagination');
+        paginationEl.innerHTML = '';
+
+        secciones.forEach((sec, index) => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.textContent = sec.nombre_seccion;
+          btn.classList.add('pagination-btn');
+          if (index === splide.index) {
+            btn.classList.add('active');
+          }
+          btn.addEventListener('click', () => {
+            splide.go(index);
+            // Opcional: hacer scroll suave al botón activo
+            btn.scrollIntoView({ behavior: 'smooth', inline: 'center' });
+          });
+          paginationEl.appendChild(btn);
+        });
+
+        // Opcional: al cargar, centrar el botón activo
+        const activeBtn = paginationEl.querySelector('.active');
+        if (activeBtn) {
+          activeBtn.scrollIntoView({ behavior: 'auto', inline: 'center' });
+        }
+      });
+
+      splide.mount();
+    })
+    .catch(err => {
+      console.error('Error al cargar el menú:', err);
+      document.getElementById('menu-contenedor').innerHTML =
+        `<div class="alert alert-danger text-center">❌ Error al cargar el menú.<br>${err.message}</div>`;
+    });
+</script>

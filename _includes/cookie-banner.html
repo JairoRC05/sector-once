@@ -1,0 +1,56 @@
+<!-- Cookie Consent Banner -->
+<div id="cookie-banner" class="fixed-bottom bg-dark text-white p-3" style="display:none; z-index:9999;">
+  <div class="container">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
+      <div>
+        <p class="mb-1">
+          <strong>🍪 Usamos cookies</strong> para analizar el tráfico. 
+          <a href="{{ '/cookies.html' | relative_url }}" class="text-white text-decoration-underline">Más información</a>
+        </p>
+      </div>
+      <div class="d-flex gap-2">
+        <button id="accept-cookies" class="btn btn-sm btn-success">Aceptar</button>
+        <button id="reject-cookies" class="btn btn-sm btn-outline-light">Rechazar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Verifica si ya se dio consentimiento
+  if (!localStorage.getItem('cookieConsent')) {
+    document.getElementById('cookie-banner').style.display = 'block';
+  }
+
+  // Aceptar
+  document.getElementById('accept-cookies').addEventListener('click', function() {
+    localStorage.setItem('cookieConsent', 'accepted');
+    document.getElementById('cookie-banner').style.display = 'none';
+    // Carga Google Analytics
+    loadGoogleAnalytics();
+  });
+
+  // Rechazar
+  document.getElementById('reject-cookies').addEventListener('click', function() {
+    localStorage.setItem('cookieConsent', 'rejected');
+    document.getElementById('cookie-banner').style.display = 'none';
+  });
+
+  // Función para cargar Google Analytics dinámicamente
+  function loadGoogleAnalytics() {
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = 'https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX'; // ← ¡Reemplaza con tu ID!
+    document.head.appendChild(script);
+
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX', { 'anonymize_ip': true });
+  }
+
+  // Si ya aceptó antes, carga GA
+  if (localStorage.getItem('cookieConsent') === 'accepted') {
+    loadGoogleAnalytics();
+  }
+</script>
