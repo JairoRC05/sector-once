@@ -47,6 +47,11 @@
           "descripcion": ""
         },
         {
+          "nombre": "PIERNA",
+          "precio": 89,
+          "descripcion": ""
+        },
+        {
           "nombre": "POLLO",
           "precio": 89,
           "descripcion": ""
@@ -148,6 +153,11 @@
         },
         {
           "nombre": "POLLO",
+          "precio": 130,
+          "descripcion": ""
+        },
+        {
+          "nombre": "PIERNA",
           "precio": 130,
           "descripcion": ""
         },
@@ -357,6 +367,11 @@
           "descripcion": ""
         },
         {
+          "nombre": "POLLO",
+          "precio": 56,
+          "descripcion": ""
+        },
+        {
           "nombre": "MILANESA",
           "precio": 56,
           "descripcion": ""
@@ -370,6 +385,11 @@
           "nombre": "HAWAIANA",
           "precio": 65,
           "descripcion": "PIÑA, JAMÓN Y QUESO OAXACA"
+        },
+        {
+          "nombre": "AL PASTOR",
+          "precio": 65,
+          "descripcion": "CARNE AL PASTOR, PIÑA Y QUESO OAXACA"
         },
         {
           "nombre": "TOCINO Y QUESO",
@@ -399,27 +419,37 @@
         {
           "nombre": "COMBO 3",
           "precio": 88,
-          "descripcion": "HAMBURGUESA DE MILANESA + PORCIÓN DE PAPAS"
+          "descripcion": "HAMBURGUESA DE POLLO + PORCIÓN DE PAPAS"
         },
         {
           "nombre": "COMBO 4",
           "precio": 88,
-          "descripcion": "HAMBURGUESA CON JAMÓN Y QUESO + PORCIÓN DE PAPAS"
+          "descripcion": "HAMBURGUESA DE MILANESA + PORCIÓN DE PAPAS"
         },
         {
           "nombre": "COMBO 5",
-          "precio": 98,
-          "descripcion": "HAMBURGUESA HAWAIANA + PORCIÓN DE PAPAS"
+          "precio": 88,
+          "descripcion": "HAMBURGUESA CON JAMÓN Y QUESO + PORCIÓN DE PAPAS"
         },
         {
           "nombre": "COMBO 6",
           "precio": 98,
-          "descripcion": "HAMBURGUESA CON TOCINO Y QUESO + PORCIÓN DE PAPAS"
+          "descripcion": "HAMBURGUESA HAWAIANA + PORCIÓN DE PAPAS"
         },
         {
           "nombre": "COMBO 7",
           "precio": 98,
+          "descripcion": "HAMBURGUESA CON TOCINO Y QUESO + PORCIÓN DE PAPAS"
+        },
+        {
+          "nombre": "COMBO 8",
+          "precio": 98,
           "descripcion": "HAMBURGUESA NORTEÑA + PORCIÓN DE PAPAS"
+        },
+        {
+          "nombre": "COMBO 9",
+          "precio": 98,
+          "descripcion": "HAMBURGUESA AL PASTOR + PORCIÓN DE PAPAS"
         }
       ]
     }
