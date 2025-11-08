@@ -1,0 +1,43 @@
+- title: "Confirmación de asistencia"
+  digital: "Automática por WhatsApp"
+  traditional: "Llamada, visita o paquetería"
+
+- title: "Entrega"
+  digital: "En 48 horas"
+  traditional: "Hasta 7 días o más"
+
+- title: "Ubicación del evento"
+  digital: "Mapa interactivo (Google Maps)"
+  traditional: "Dirección escrita"
+
+- title: "Información incluida"
+  digital: "Horarios, vestimenta, fechas, regalos… ¡todo junto!"
+  traditional: "Limitada por el tamaño del papel"
+
+- title: "Contador regresivo"
+  digital: "Sí, integrado"
+  traditional: "No tiene"
+
+- title: "Acceso"
+  digital: "24/7 desde cualquier dispositivo"
+  traditional: "Se pierde fácilmente"
+
+- title: "Música"
+  digital: "Canción de fondo personalizada"
+  traditional: "No aplica"
+
+- title: "Correcciones"
+  digital: "Rápidas y sin costo antes de enviar"
+  traditional: "No editables después de imprimir"
+
+- title: "Costo"
+  digital: "Ahorro total en impresión"
+  traditional: "Alto costo físico"
+
+- title: "Impacto ambiental"
+  digital: "Cero papel, cero contaminación 🌿"
+  traditional: "Contaminación por papel y tinta"
+
+- title: "Mesa de regalos"
+  digital: "Enlace directo integrado"
+  traditional: "Enlace aparte o verbal"
