@@ -66,7 +66,7 @@ layout: default
 
 
   <section id="esp" class="tab-content ">
-
+        <div id="extras"></div>
   </section>
 
   <!-- Sección 2: Contacto -->
@@ -293,6 +293,69 @@ layout: default
     .catch(err => {
       console.error('Error al cargar el menú:', err);
       document.getElementById('menu-contenedor').innerHTML =
+        `<div class="alert alert-danger text-center">❌ Error al cargar el menú.<br>${err.message}</div>`;
+    });
+</script>
+
+<script>
+  const menuPageExtras = {{ page.extras | jsonify }};
+  console.log("ID de extras:", menuPageExtras); 
+  const jsonEURL = `/assets/menus/${menuPageExtras}.json`;
+  console.log("URL a cargar:", jsonEURL); 
+
+  fetch(jsonEURL)
+    .then(response => {
+      if (!response.ok) throw new Error(`Menú no encontrado (${response.status})`);
+      return response.json();
+    })
+    .then(data => {
+      if (!data || !data.activo) {
+        document.getElementById('extras').innerHTML =
+          `<div class="alert alert-warning text-center">Menú temporalmente desactivado</div>`;
+        return;
+      }
+
+      const secciones = data.secciones || [];
+      if (secciones.length === 0) {
+        document.getElementById('extras').innerHTML =
+          `<div class="alert alert-info text-center">No hay secciones</div>`;
+        return;
+      }
+
+      // --- Generar HTML estático (sin Splide) ---
+      let seccionesHTML = '';
+      secciones.forEach(sec => {
+        const productosHTML = sec.productos.map(prod => `
+          <div class="producto py-2">
+            <div class="row align-items-center g-2">
+              <div class="col">
+                <div class="nombre fw-medium">${prod.nombre}</div>
+                ${prod.descripcion ? `<div class="descripcion text-muted small mt-1">${prod.descripcion}</div>` : ''}
+              </div>
+              <div class="col-auto text-end">
+                <div class="precio fw-bold text-orange">$${parseFloat(prod.precio).toFixed(2)}</div>
+              </div>
+            </div>
+          </div>
+        `).join('');
+
+        seccionesHTML += `
+          <div class="card border-0 mb-4">
+            <div class="card-header bg-white border-0">
+              <h2 class="mb-0">${sec.nombre_seccion}</h2>
+            </div>
+            <div class="card-body p-0" style="max-height: 50vh; overflow-y: auto;">
+              ${productosHTML}
+            </div>
+          </div>
+        `;
+      });
+
+      document.getElementById('extras').innerHTML = seccionesHTML;
+    })
+    .catch(err => {
+      console.error('Error al cargar el menú de extras:', err);
+      document.getElementById('extras').innerHTML =
         `<div class="alert alert-danger text-center">❌ Error al cargar el menú.<br>${err.message}</div>`;
     });
 </script>

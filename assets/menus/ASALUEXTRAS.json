@@ -1,0 +1,17 @@
+{
+  "menu_id": "asalu",
+  "nombre_menu": "ASALU",
+  "activo": true,
+  "secciones": [
+    {
+      "nombre_seccion": "NUEVOS",
+      "productos": [
+        {
+          "nombre": "HAMBURGUESA FRANCESA",
+          "precio": 65,
+          "descripcion": "JAMÓN Y QUESO PANELA"
+        }
+      ]
+    }
+  ]
+}

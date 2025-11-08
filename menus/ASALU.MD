@@ -10,4 +10,5 @@ whatsapp: "52777"                 # sin espacios, con código de país
 ubicacion: "U. MORELOS, AND 406"
 horario: "Lun–Dom: 18:00 – 23:00"
 domicilio: true
+extras: ASALUEXTRAS
 ---
