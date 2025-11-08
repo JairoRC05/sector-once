@@ -4,12 +4,92 @@
   "activo": true,
   "secciones": [
     {
-      "nombre_seccion": "NUEVOS",
+      "nombre_seccion": "HAMBURGUESAS",
       "productos": [
         {
-          "nombre": "HAMBURGUESA FRANCESA",
+          "nombre": "FRANCESA",
           "precio": 65,
           "descripcion": "JAMÓN Y QUESO PANELA"
+        },
+        {
+          "nombre": "AL PASTOR",
+          "precio": 65,
+          "descripcion": "CARNE AL PASTOR, PIÑA Y QUESO OAXACA"
+        },
+        {
+          "nombre": "POLLO",
+          "precio": 65,
+          "descripcion": ""
+        }
+      ]
+    },
+    {
+      "nombre_seccion": "TORTAS",
+      "productos": [
+        {
+          "nombre": "ESPECIAL",
+          "precio": 99,
+          "descripcion": "BISTEC, JAMÓN, PIÑA Y QUESO OAXACA"
+        },
+        {
+          "nombre": "FRANCESA",
+          "precio": 99,
+          "descripcion": "PIERNA, SALCHICHA Y QUESO PANELA"
+        },
+        {
+          "nombre": "PORTUGUESA",
+          "precio": 99,
+          "descripcion": "CHORIZO, PIERNA Y QUESO OAXACA"
+        },
+        {
+          "nombre": "AMÉRICANA",
+          "precio": 99,
+          "descripcion": "BISTEC, TOCINO Y QUESO OAXACA"
+        },
+        {
+          "nombre": "ESPAÑOLA",
+          "precio": 99,
+          "descripcion": "POLLO, PIERNA Y QUESO OAXACA"
+        },
+        {
+          "nombre": "COLOMBIANA",
+          "precio": 99,
+          "descripcion": "BISTEC, CHORIZO Y QUESO OAXACA"
+        }
+      ]
+    },
+    {
+      "nombre_seccion": "BAGUETTES",
+      "productos": [
+        {
+          "nombre": "ESPECIAL",
+          "precio": 140,
+          "descripcion": "BISTEC, JAMÓN, PIÑA Y QUESO OAXACA"
+        },
+        {
+          "nombre": "FRANCÉS",
+          "precio": 140,
+          "descripcion": "PIERNA, SALCHICHA Y QUESO PANELA"
+        },
+        {
+          "nombre": "PORTUGUÉS",
+          "precio": 99,
+          "descripcion": "CHORIZO, PIERNA Y QUESO OAXACA"
+        },
+        {
+          "nombre": "AMÉRICANO",
+          "precio": 99,
+          "descripcion": "BISTEC, TOCINO Y QUESO OAXACA"
+        },
+        {
+          "nombre": "ESPAÑOL",
+          "precio": 99,
+          "descripcion": "POLLO, PIERNA Y QUESO OAXACA"
+        },
+        {
+          "nombre": "COLOMBIANO",
+          "precio": 99,
+          "descripcion": "BISTEC, CHORIZO Y QUESO OAXACA"
         }
       ]
     }
