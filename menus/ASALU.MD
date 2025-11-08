@@ -2,7 +2,7 @@
 layout: menu
 title: "Antojitos Salu"
 ID: ASALU
-permalink: /menus/antojitos-salu
+permalink: /menu/antojitos-salu
 logo: /assets/images/logos/ASALU.webp          # opcional
 foto_local: ASALU    # opcional
 telefono: "5512345678"

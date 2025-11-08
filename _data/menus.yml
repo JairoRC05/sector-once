@@ -1,0 +1,15 @@
+- id: restaurante_a
+  name: "Menú Restaurante A"
+  url: "https://sectoronce.com/menus/restaurante-a"
+
+- id: liga_indigo
+  name: "Menú Torneo Índigo SPC"
+  url: "https://sectoronce.com/menus/liga-indigo"
+
+- id: boda_ana
+  name: "Menú Boda Ana & Luis"
+  url: "https://sectoronce.com/menus/boda-ana"
+
+- id: antojitos_salu
+  name: "Antojitos Salu"
+  url: "https://sectoronce.com/menu/antojitos-salu"
