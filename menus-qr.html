@@ -1,0 +1,276 @@
+---
+layout: default
+title: Menuú QR Dinámico
+---
+
+{% include navbar.html %}
+
+<section class="position-relative overflow-hidden" style="height: 40vh;">
+    <img src="{{ '/assets/images/backgrounds/menu-qr.webp' | relative_url }}"
+        class="img-fluid w-100 h-100 object-fit-cover" alt="Invitaciones digitales personalizadas">
+    <div class="position-absolute top-0 start-0 w-100 h-100 bg-black bg-opacity-50 d-flex align-items-center">
+        <div class="container text-white">
+            <h1 class="display-4 fw-bold">Menú QR Dinámico</h1>
+         </div>
+    </div>
+</section>
+
+
+
+<section class="py-5 bg-light">
+  <div class="container py-4">
+    <div class="row align-items-center">
+      <div class="col-md-6 mb-4 mb-md-0">
+      
+        <p class="text-muted lead">
+          Transforma la experiencia de tus comensales con un menú digital interactivo, accesible desde un código QR.
+        </p>
+        <ul class="list-unstyled mt-3">
+          <li class="d-flex align-items-start mb-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-check-circle-fill text-success me-2" viewBox="0 0 16 16">
+              <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+            </svg>
+            Actualizable en tiempo real
+          </li>
+          <li class="d-flex align-items-start mb-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-check-circle-fill text-success me-2" viewBox="0 0 16 16">
+              <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+            </svg>
+            Diseño personalizado con tu marca
+          </li>
+          <li class="d-flex align-items-start">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-check-circle-fill text-success me-2" viewBox="0 0 16 16">
+              <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+            </svg>
+            Compatible con cualquier dispositivo
+          </li>
+        </ul>
+      
+      </div>
+      <div class="col-md-6 d-flex justify-content-center">
+        <div class="bg-white p-3 rounded shadow" style="max-width: 300px;">
+          <div class="text-center mb-2">
+            <span class="badge bg-primary">Menú QR de Ejemplo</span>
+          </div>
+          <div class="bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                {% include qr/antojitos_salu.svg %}
+          </div>
+          <p class="text-center small text-muted mt-2">Escanea para ver menú interactivo</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Planes de Menú QR -->
+<section class="py-5">
+  <div class="container">
+    <h2 class="fw-bold text-center mb-2">Planes de Menú QR</h2>
+    <p class="text-muted text-center mb-5">
+      Elige el plan que mejor se adapte a tu negocio. ¡Actualiza tu carta sin imprimir!
+    </p>
+
+    <!-- Tarjetas responsivas (para móvil y escritorio) -->
+    <div class="row g-4">
+      <!-- Trimestral -->
+      <div class="col-md-4">
+        <div class="border rounded-4 p-4 h-100 shadow-sm">
+          <h4 class="fw-bold">Anual</h4>
+          <div class="my-3">
+            <span class="display-6 fw-bold">$840</span>
+            <span class="text-muted"> MXN</span>
+          </div>
+          <p class="small text-muted">Por 12 meses</p>
+          <ul class="list-unstyled small">
+            <li>✓ $70/mes</li>
+            <li>✓ Banner</li>
+            <li>✓ Archivos QR (PNG + PDF)</li>
+            <li>✓ Menú básico  (ubicación, horario, contacto)</li>
+          </ul>
+          <a href="https://wa.me/525539600935?text=Quiero%20el%20plan%20trimestral%20de%20menú%20QR" 
+             class="btn btn-outline-primary w-100 mt-3">
+            Solicitar
+          </a>
+        </div>
+      </div>
+
+      <!-- Semestral -->
+      <div class="col-md-4">
+        <div class="border rounded-4 p-4 h-100 shadow-sm bg-light">
+          <span class="badge bg-warning mb-2">Popular</span>
+          <h4 class="fw-bold">Anual</h4>
+          <div class="my-3">
+            <span class="display-6 fw-bold">$1,200</span>
+            <span class="text-muted"> MXN</span>
+          </div>
+          <p class="small text-muted">Por 12 meses</p>
+          <ul class="list-unstyled small">
+            <li>✓ $100/mes</li>
+            <li>✓ Banner</li>
+            <li>✓ Archivos QR (PNG + PDF)</li>
+            <li>✓ Botón WhatsApp</li>
+            <li>✓ Promociones</li>
+            <li>✓ Redes sociales</li>
+          </ul>
+          <a href="https://wa.me/525539600935?text=Quiero%20el%20plan%20semestral%20de%20menú%20QR" 
+             class="btn btn-primary w-100 mt-3">
+            Solicitar
+          </a>
+        </div>
+      </div>
+
+      <!-- Anual -->
+      <div class="col-md-4">
+        <div class="border rounded-4 p-4 h-100 shadow-sm">
+          <h4 class="fw-bold">Anual</h4>
+          <div class="my-3">
+            <span class="display-6 fw-bold">$1,800</span>
+            <span class="text-muted"> MXN</span>
+          </div>
+          <p class="small text-muted">Por 12 meses</p>
+          <ul class="list-unstyled small">
+            <li>✓ $150/mes</li>
+            <li>✓ Banner</li>
+            <li>✓ 3 QRs impresos</li>
+            <li>✓ Galería de fotos (Máximo 30 Fotos)</li>
+            <li>✓ Foto del local</li>
+            <li>✓ Promociones</li>
+            <li>✓ Menú por secciones</li>
+                <li>✓ Redes sociales</li>
+          </ul>
+          <a href="https://wa.me/525539600935?text=Quiero%20el%20plan%20anual%20de%20menú%20QR" 
+             class="btn btn-outline-primary w-100 mt-3">
+            Solicitar
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA final -->
+    <div class="text-center mt-5">
+      <p class="text-muted small">
+        Todos los planes incluyen actualizaciones ilimitadas durante su vigencia.
+      </p>
+    </div>
+  </div>
+</section>
+
+
+<section class="py-5 bg-light">
+  <div class="container">
+    <h2 class="fw-bold text-center mb-5">Preguntas frecuentes</h2>
+
+    <div class="row g-4">
+      <div class="col-md-6">
+        <div class="d-flex">
+          <div class="flex-shrink-0 me-3">
+            <i class="bi bi-qr-code fs-4 text-primary"></i>
+          </div>
+          <div>
+            <h5>¿Cómo imprimo los códigos QR?</h5>
+            <p class="text-muted">
+              Te enviamos los archivos en <strong>PNG (alta resolución) y PDF</strong>, listos para imprimir en casa,
+              en una papelería o incluso en carteles grandes.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="d-flex">
+          <div class="flex-shrink-0 me-3">
+            <i class="bi bi-clock-history fs-4 text-primary"></i>
+          </div>
+          <div>
+            <h5>¿Y si mi negocio cierra ciertos días?</h5>
+            <p class="text-muted">
+              Incluimos tu horario en el menú, y si lo deseas, <strong>se puede ocultar automáticamente</strong> los días que no abres.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="d-flex">
+          <div class="flex-shrink-0 me-3">
+            <i class="bi bi-clock fs-4 text-primary"></i>
+          </div>
+          <div>
+            <h5>¿Cuánto tarda en entregarse?</h5>
+            <p class="text-muted">
+              La mayoría de los menús QR están listos en <strong>24 a 48 horas</strong> después de confirmar tu información.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="d-flex">
+          <div class="flex-shrink-0 me-3">
+            <i class="bi bi-wrench fs-4 text-primary"></i>
+          </div>
+          <div>
+            <h5>¿Y si necesito hacer cambios?</h5>
+            <p class="text-muted">
+              Durante la vigencia de tu plan, puedes <strong>actualizar precios, productos o horarios</strong> sin costo.
+              Solo avísanos por WhatsApp.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="d-flex">
+          <div class="flex-shrink-0 me-3">
+            <i class="bi bi-phone fs-4 text-primary"></i>
+          </div>
+          <div>
+            <h5>¿Funciona si no hay internet en el local?</h5>
+            <p class="text-muted">
+              ¡Sí! El cliente abre el menú desde <strong>su propio celular</strong> (con datos o WiFi). No necesitas internet en tu restaurante.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="d-flex">
+          <div class="flex-shrink-0 me-3">
+            <i class="bi bi-layout-text-sidebar fs-4 text-primary"></i>
+          </div>
+          <div>
+            <h5>¿Puedo tener varios menús (comida, bebidas, postres)?</h5>
+            <p class="text-muted">
+              Sí. En el <strong>plan Anual ($1,800)</strong>, incluimos menú por secciones: entradas, platos fuertes, bebidas, postres, etc.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center mt-5">
+      <a href="https://wa.me/521234567890?text=Tengo%20una%20duda%20sobre%20el%20menú%20QR"
+        class="btn btn-outline-primary">
+        <i class="bi bi-whatsapp"></i> ¿Tienes otra duda?
+      </a>
+    </div>
+  </div>
+</section>
+
+
+
+<div class="text-center py-5">
+  <h3 class="fw-bold">¿Listo para modernizar tu menú?</h3>
+  <p class="text-muted mb-4">
+    Actualiza tu carta en segundos, sin volver a imprimir.
+  </p>
+  <a href="https://wa.me/525539600935?text=Quiero%20un%20menú%20QR%20para%20mi%20negocio" 
+     class="btn btn-success btn-lg px-5">
+    <i class="bi bi-whatsapp"></i> Solicitar presupuesto
+  </a>
+  <p class="text-muted small mt-3">
+    Entrega en 24–48 horas. 
+  </p>
+</div>
+
+{% include footer.html %}
