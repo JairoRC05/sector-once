@@ -1,5 +1,6 @@
 ---
 layout: default
+title: Invitacion Boda Demo
 ---
 
 
@@ -88,34 +89,21 @@ layout: default
 }
 
 .espectro {
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  gap: 6px;
-  margin-top: 25px;
-  padding: 14px 18px;
-  border-radius: 16px;
-  background: rgba(0, 0, 0, 0.18);
-  backdrop-filter: blur(8px);
-  cursor: pointer;
   position: relative;
+  width: 100%;
+  max-width: 360px;
+  margin: 25px auto;
+  cursor: pointer;
+  border-radius: 8px;
   overflow: hidden;
-  width: 220px;
-  margin-inline: auto;
+
+  padding: 12px 0;
 }
 
-.espectro .barra {
-  width: 6px;
-  height: 40px;
-  border-radius: 4px;
-  background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.6));
-  transform-origin: bottom;
-  transform: scaleY(0.2);
-  transition: transform 0.1s linear;
-}
-
-.espectro.paused .barra {
-  opacity: 0.4;
+#waveform-canvas {
+  width: 100%;
+  height: 60px;
+  display: block;
 }
 
 .estado-texto {
@@ -133,11 +121,6 @@ layout: default
   user-select: none;
 }
 
-/* mobile */
-@media (max-width: 768px) {
-  .espectro { gap: 4px; padding: 10px 12px; width: 180px; }
-  .espectro .barra { width: 5px; height: 30px; }
-}
 
 /* Modal */
 .modal {
@@ -213,15 +196,16 @@ layout: default
           <div class="invitacion-layer">
            
           </div>
+          
         </div>
 
-  <div id="espectro" class="espectro" role="button" aria-pressed="false" title="Tocar para pausar/reproducir">
-    <!-- Barras generadas automáticamente por JS -->
-    <div id="estado-texto" class="estado-texto">Cargando...</div>
-  </div>
+<div id="espectro" class="espectro" role="button" aria-pressed="false" tabindex="0" title="Tocar para reproducir">
+  <canvas id="waveform-canvas"></canvas>
+  <div id="estado-texto" class="estado-texto">▶ Reproducir</div>
+</div>
 
-  <!-- Opcional: audio control (puedes ocultarlo) -->
-  <audio id="invitacion-audio" src="/assets/invitaciones/bodas/sounds/una historia de amor.mp3" preload="auto" loop></audio>
+<audio id="invitacion-audio" src="/assets/invitaciones/bodas/sounds/una historia de amor.mp3" preload="metadata" loop></audio>
+
 
 
 
@@ -288,81 +272,160 @@ function cerrarModal() {
 }
 </script>
 
-
-
 <script>
 document.addEventListener('DOMContentLoaded', async () => {
   const espectro = document.getElementById('espectro');
+  const canvas = document.getElementById('waveform-canvas');
   const audioEl = document.getElementById('invitacion-audio');
   const estadoTexto = document.getElementById('estado-texto');
 
-  // Crear barras visuales
-  const numBarras = 32;
-  for (let i = 0; i < numBarras; i++) {
-    const barra = document.createElement('div');
-    barra.classList.add('barra');
-    espectro.insertBefore(barra, estadoTexto);
+  let audioCtx = null;
+  let buffer = null;
+  let isPlaying = false;
+  let currentTime = 0;
+  let duration = 0;
+  let animationId = null;
+
+  // Ajustar canvas al tamaño del contenedor
+  function resizeCanvas() {
+    const containerWidth = espectro.clientWidth;
+    canvas.width = containerWidth;
+    canvas.height = 60;
+    if (buffer) drawWaveform(buffer); // Redibujar si ya hay buffer
   }
-  const barras = espectro.querySelectorAll('.barra');
 
-  let audioCtx, source, analyser, dataArray, isPlaying = false;
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
 
-  async function setupAudio() {
-    if (!audioCtx) {
+  async function loadAudioBuffer() {
+    try {
+      const response = await fetch(audioEl.src);
+      const arrayBuffer = await response.arrayBuffer();
       audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      analyser = audioCtx.createAnalyser();
-      source = audioCtx.createMediaElementSource(audioEl);
-      source.connect(analyser);
-      analyser.connect(audioCtx.destination);
-      analyser.fftSize = 64;
-      const bufferLength = analyser.frequencyBinCount;
-      dataArray = new Uint8Array(bufferLength);
+      buffer = await audioCtx.decodeAudioData(arrayBuffer);
+      duration = buffer.duration;
+      drawWaveform(buffer);
+      updateProgressLine(0); // Mostrar línea en posición inicial
+    } catch (err) {
+      console.error('Error cargando audio:', err);
+      estadoTexto.textContent = '⚠ Audio no disponible';
     }
   }
 
-  function animateSpectrum() {
-    if (!isPlaying) return;
-    analyser.getByteFrequencyData(dataArray);
-    for (let i = 0; i < barras.length; i++) {
-      const val = dataArray[i] / 255; // valor normalizado
-      const scale = Math.max(0.2, val * 1.4);
-      barras[i].style.transform = `scaleY(${scale})`;
+  function drawWaveform(buffer) {
+    const ctx = canvas.getContext('2d');
+    const { width, height } = canvas;
+    const data = buffer.getChannelData(0); // solo canal izquierdo
+    const step = Math.ceil(data.length / width);
+    const amp = height / 2;
+
+    ctx.clearRect(0, 0, width, height);
+    ctx.fillStyle = '#fff';
+
+    for (let i = 0; i < width; i++) {
+      const index = Math.floor(i * step);
+      const value = Math.abs(data[index] || 0);
+      const barHeight = Math.max(1, value * amp);
+      ctx.fillRect(i, height / 2 - barHeight / 2, 1, barHeight);
     }
-    requestAnimationFrame(animateSpectrum);
+  }
+
+  function updateProgressLine(time) {
+    const ctx = canvas.getContext('2d');
+    const { width, height } = canvas;
+    const progress = time / duration;
+    const xPos = Math.floor(progress * width);
+
+    // Dibujar línea de progreso (solo la línea, sin borrar el waveform)
+    ctx.fillStyle = 'rgba(255,255,255,0.7)';
+    ctx.fillRect(xPos, 0, 1, height);
+
+    // Mostrar tiempos
+    const formatTime = (t) => {
+      const mins = Math.floor(t / 60).toString().padStart(2, '0');
+      const secs = Math.floor(t % 60).toString().padStart(2, '0');
+      return `${mins}:${secs}`;
+    };
+
+    ctx.fillStyle = '#fff';
+    ctx.font = '10px Arial';
+    ctx.textAlign = 'left';
+    ctx.fillText(formatTime(time), 5, 12);
+    ctx.textAlign = 'right';
+    ctx.fillText(formatTime(duration), width - 5, 12);
+  }
+
+  function animateProgress() {
+    if (!isPlaying) return;
+
+    currentTime = audioEl.currentTime;
+    const ctx = canvas.getContext('2d');
+    const { width, height } = canvas;
+
+    // Limpiar solo la zona de la línea anterior (optimización)
+    // O simplemente redibujar todo (más simple y funciona bien)
+    drawWaveform(buffer); // Volver a dibujar el waveform
+    updateProgressLine(currentTime); // Dibujar nueva línea
+
+    animationId = requestAnimationFrame(animateProgress);
   }
 
   async function togglePlay() {
-    if (!audioCtx) await setupAudio();
-
-    if (isPlaying) {
-      audioEl.pause();
-      espectro.classList.add('paused');
-      estadoTexto.textContent = '⏸ Pausa';
-      isPlaying = false;
-    } else {
-      try {
-        await audioCtx.resume();
-        await audioEl.play();
-        espectro.classList.remove('paused');
-        estadoTexto.textContent = '🎵 Reproduciendo';
-        isPlaying = true;
-        animateSpectrum();
-      } catch (err) {
-        estadoTexto.textContent = '⚠ No se pudo reproducir';
+    try {
+      if (!buffer) {
+        await loadAudioBuffer();
+        if (!buffer) return;
       }
+
+      if (isPlaying) {
+        audioEl.pause();
+        espectro.classList.remove('playing');
+        estadoTexto.textContent = '▶ Reproducir';
+        isPlaying = false;
+        if (animationId) cancelAnimationFrame(animationId);
+        // Volver a dibujar el waveform sin línea móvil (solo línea fija en posición actual)
+        drawWaveform(buffer);
+        updateProgressLine(currentTime);
+      } else {
+        if (audioCtx.state === 'suspended') {
+          await audioCtx.resume();
+        }
+
+        // Reiniciar si llegó al final
+        if (currentTime >= duration) {
+          audioEl.currentTime = 0;
+          currentTime = 0;
+        }
+
+        await audioEl.play();
+        espectro.classList.add('playing');
+        estadoTexto.textContent = '⏸ Pausa';
+        isPlaying = true;
+        animateProgress();
+      }
+    } catch (err) {
+      console.error('Error al reproducir:', err);
+      estadoTexto.textContent = '⚠ No se pudo reproducir';
+      espectro.classList.remove('playing');
+      isPlaying = false;
     }
   }
 
-  // Inicia pausado
-  espectro.classList.add('paused');
-  estadoTexto.textContent = '⏸ Pausa';
-
+ // Cargar audio y, si es posible, reproducir automáticamente
+loadAudioBuffer().then(() => {
+  // Opcional: intentar reproducir automáticamente
+  // Esto puede fallar silenciosamente si el navegador lo bloquea
+  togglePlay().catch(() => {
+    // Si falla, no pasa nada; el usuario puede tocar para reproducir
+    estadoTexto.textContent = '▶ Tocar para reproducir';
+  });
+});
+  // Eventos
   espectro.addEventListener('click', (e) => {
-    e.stopPropagation();
+    e.preventDefault();
     togglePlay();
   });
 
-  // Accesibilidad teclado
   espectro.addEventListener('keydown', (e) => {
     if (e.key === ' ' || e.key === 'Enter') {
       e.preventDefault();
