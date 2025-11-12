@@ -1,0 +1,373 @@
+---
+layout: default
+---
+
+
+
+
+<style>
+.invitacion-web {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0.6));
+  color: white;
+  font-family: "Cormorant Garamond", serif;
+  overflow: hidden;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background-image: url('/assets/invitaciones/bodas/fondo-boda-1.webp');
+  background-size: cover;
+  background-position: center;
+  filter: brightness(0.4);
+  z-index: 0;
+}
+
+.contenedor {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  padding: 0 5%;
+}
+
+/* Columna Izquierda */
+.columna.texto {
+  text-align: left;
+}
+
+.nombres {
+  font-size: 2.8rem;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.texto-principal {
+  font-size: 3.5rem;
+  font-weight: 400;
+  margin: 30px 0;
+  transition: opacity 1s ease;
+}
+
+.iconos {
+  display: flex;
+  gap: 25px;
+  font-size: 1.8rem;
+  margin: 40px 0;
+}
+
+.iconos i {
+  cursor: pointer;
+  transition: transform 0.3s, color 0.3s;
+}
+
+.iconos i:hover {
+  transform: scale(1.3);
+  color: #ffebcd;
+}
+
+.fecha {
+  font-size: 1rem;
+  opacity: 0.9;
+}
+
+/* Columna Derecha */
+.columna {
+  position: relative;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.espectro {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 25px;
+  padding: 14px 18px;
+  border-radius: 16px;
+  background: rgba(0, 0, 0, 0.18);
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  width: 220px;
+  margin-inline: auto;
+}
+
+.espectro .barra {
+  width: 6px;
+  height: 40px;
+  border-radius: 4px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.6));
+  transform-origin: bottom;
+  transform: scaleY(0.2);
+  transition: transform 0.1s linear;
+}
+
+.espectro.paused .barra {
+  opacity: 0.4;
+}
+
+.estado-texto {
+  position: absolute;
+  bottom: -28px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.95);
+  background: rgba(0,0,0,0.3);
+  padding: 3px 10px;
+  border-radius: 10px;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* mobile */
+@media (max-width: 768px) {
+  .espectro { gap: 4px; padding: 10px 12px; width: 180px; }
+  .espectro .barra { width: 5px; height: 30px; }
+}
+
+/* Modal */
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.8);
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal-contenido {
+  background: white;
+  color: black;
+  padding: 30px;
+  max-width: 400px;
+  border-radius: 20px;
+  text-align: center;
+  position: relative;
+}
+
+.cerrar {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+/* Responsive para móviles */
+@media (max-width: 768px) {
+  .contenedor {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .columna.imagen img {
+    width: 90%;
+  }
+
+  .nombres { font-size: 2rem; }
+  .texto-principal { font-size: 2.5rem; }
+}
+
+
+</style>
+
+<div class="invitacion-web">
+  <div class="overlay"></div>
+
+  <div class="contenedor">
+    <!-- Columna Izquierda -->
+    <div class="columna texto">
+      <h2 class="nombres">Ana & Luis</h2>
+      <div class="texto-principal" id="texto-principal">7 Días Faltan</div>
+
+      <div class="iconos">
+        <i class="bi bi-ring" onclick="abrirModal('ceremonia')"></i>
+        <i class="bi bi-tag" onclick="abrirModal('mesa')"></i>
+        <i class="bi bi-gift" onclick="abrirModal('regalos')"></i>
+        <i class="bi bi-list-task" onclick="abrirModal('padrinos')"></i>
+        <i class="bi bi-geo-alt" onclick="abrirModal('ubicacion')"></i>
+        <i class="bi bi-images" onclick="abrirModal('galeria')"></i>
+      </div>
+
+      <div class="fecha">12 de diciembre · 2025 · Hacienda Santa Rosa</div>
+    </div>
+
+    <!-- Columna Derecha -->
+    <div class="columna">
+        <div class="invitacion">
+          <div class="invitacion-layer">
+           
+          </div>
+        </div>
+
+  <div id="espectro" class="espectro" role="button" aria-pressed="false" title="Tocar para pausar/reproducir">
+    <!-- Barras generadas automáticamente por JS -->
+    <div id="estado-texto" class="estado-texto">Cargando...</div>
+  </div>
+
+  <!-- Opcional: audio control (puedes ocultarlo) -->
+  <audio id="invitacion-audio" src="/assets/invitaciones/bodas/sounds/una historia de amor.mp3" preload="auto" loop></audio>
+
+
+
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div id="modal" class="modal" onclick="cerrarModal()">
+  <div class="modal-contenido" onclick="event.stopPropagation()">
+    <span class="cerrar" onclick="cerrarModal()">&times;</span>
+    <div id="contenido-modal"></div>
+  </div>
+</div>
+
+<!-- Modales -->
+<div id="modal" class="modal" onclick="cerrarModal()">
+  <div class="modal-contenido" onclick="event.stopPropagation()">
+    <span class="cerrar" onclick="cerrarModal()">&times;</span>
+    <div id="contenido-modal"></div>
+  </div>
+</div>
+
+
+
+
+<script>
+const frases = [
+  "7 Días Faltan",
+  "Una historia de amor comienza",
+  "Con la bendición de nuestros padres",
+  "Y el apoyo de nuestros padrinos"
+];
+
+let index = 0;
+const texto = document.getElementById("texto-principal");
+
+setInterval(() => {
+  texto.style.opacity = 0;
+  setTimeout(() => {
+    index = (index + 1) % frases.length;
+    texto.textContent = frases[index];
+    texto.style.opacity = 1;
+  }, 1000);
+}, 4000);
+
+// Modales
+function abrirModal(tipo) {
+  const contenido = {
+    ceremonia: "<h2>Detalles de la Ceremonia</h2><p>12 de diciembre, 5:00 PM</p>",
+    mesa: "<h2>Mesa de regalos</h2><p>Liverpool · Amazon</p>",
+    regalos: "<h2>Regalos</h2><p>Tu presencia es nuestro mejor regalo ❤️</p>",
+    padrinos: "<h2>Padrinos</h2><p>Juan & María</p>",
+    ubicacion: "<h2>Ubicación</h2><p>Hacienda Santa Rosa</p>",
+    galeria: "<h2>Galería</h2><p>Próximamente...</p>"
+  };
+
+  document.getElementById("contenido-modal").innerHTML = contenido[tipo] || "";
+  document.getElementById("modal").style.display = "flex";
+}
+
+function cerrarModal() {
+  document.getElementById("modal").style.display = "none";
+}
+</script>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+  const espectro = document.getElementById('espectro');
+  const audioEl = document.getElementById('invitacion-audio');
+  const estadoTexto = document.getElementById('estado-texto');
+
+  // Crear barras visuales
+  const numBarras = 32;
+  for (let i = 0; i < numBarras; i++) {
+    const barra = document.createElement('div');
+    barra.classList.add('barra');
+    espectro.insertBefore(barra, estadoTexto);
+  }
+  const barras = espectro.querySelectorAll('.barra');
+
+  let audioCtx, source, analyser, dataArray, isPlaying = false;
+
+  async function setupAudio() {
+    if (!audioCtx) {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      analyser = audioCtx.createAnalyser();
+      source = audioCtx.createMediaElementSource(audioEl);
+      source.connect(analyser);
+      analyser.connect(audioCtx.destination);
+      analyser.fftSize = 64;
+      const bufferLength = analyser.frequencyBinCount;
+      dataArray = new Uint8Array(bufferLength);
+    }
+  }
+
+  function animateSpectrum() {
+    if (!isPlaying) return;
+    analyser.getByteFrequencyData(dataArray);
+    for (let i = 0; i < barras.length; i++) {
+      const val = dataArray[i] / 255; // valor normalizado
+      const scale = Math.max(0.2, val * 1.4);
+      barras[i].style.transform = `scaleY(${scale})`;
+    }
+    requestAnimationFrame(animateSpectrum);
+  }
+
+  async function togglePlay() {
+    if (!audioCtx) await setupAudio();
+
+    if (isPlaying) {
+      audioEl.pause();
+      espectro.classList.add('paused');
+      estadoTexto.textContent = '⏸ Pausa';
+      isPlaying = false;
+    } else {
+      try {
+        await audioCtx.resume();
+        await audioEl.play();
+        espectro.classList.remove('paused');
+        estadoTexto.textContent = '🎵 Reproduciendo';
+        isPlaying = true;
+        animateSpectrum();
+      } catch (err) {
+        estadoTexto.textContent = '⚠ No se pudo reproducir';
+      }
+    }
+  }
+
+  // Inicia pausado
+  espectro.classList.add('paused');
+  estadoTexto.textContent = '⏸ Pausa';
+
+  espectro.addEventListener('click', (e) => {
+    e.stopPropagation();
+    togglePlay();
+  });
+
+  // Accesibilidad teclado
+  espectro.addEventListener('keydown', (e) => {
+    if (e.key === ' ' || e.key === 'Enter') {
+      e.preventDefault();
+      togglePlay();
+    }
+  });
+});
+</script>
