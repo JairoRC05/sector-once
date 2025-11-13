@@ -4,268 +4,398 @@ title: Invitacion Boda Demo
 ---
 
 
-<div class="invitacion-web">
-  <div class="overlay"></div>
 
-  <div class="contenedor">
-    <!-- Columna Izquierda -->
-    <div class="columna texto">
-      <h2 class="nombres">Nataly & Mario</h2>
-      <div class="texto-principal" id="texto-principal">7 Días Faltan</div>
+<div class="pantalla">
 
-      <div class="iconos">
-        <i class="bi bi-ring" onclick="abrirModal('ceremonia')"></i>
-        <i class="bi bi-tag" onclick="abrirModal('mesa')"></i>
-        <i class="bi bi-gift" onclick="abrirModal('regalos')"></i>
-        <i class="bi bi-list-task" onclick="abrirModal('padrinos')"></i>
-        <i class="bi bi-geo-alt" onclick="abrirModal('ubicacion')"></i>
-        <i class="bi bi-images" onclick="abrirModal('galeria')"></i>
-      </div>
+  <section class="invitacionSeccion" id="principal">
 
-      <div class="fecha">12 de diciembre · 2025 · Hacienda Santa Rosa</div>
-    </div>
+    <div class="invitacion-web">
+      <div class="overlay"></div>
 
-    <!-- Columna Derecha -->
-    <div class="columna">
-        <div class="invitacion">
-          <div class="invitacion-layer">
-           
+      <div class="contenedor">
+        <!-- Columna Izquierda -->
+        <div class="columna texto">
+          <h2 class="nombres">Nataly & Mario</h2>
+          <div class="texto-principal" id="texto-principal">7 Días Faltan</div>
+
+
+          <div class="iconos">
+            {% include menu-boda.html %}
           </div>
-          
+
+
+          <div class="fecha">13 de diciembre · 2025 · Hacienda Santa Rosa</div>
         </div>
 
-<div id="espectro" class="espectro" role="button" aria-pressed="false" tabindex="0" title="Tocar para reproducir">
-  <canvas id="waveform-canvas"></canvas>
-  <div id="estado-texto" class="estado-texto">▶ Reproducir</div>
-</div>
+        <!-- Columna Derecha -->
+        <div class="columna">
+          <div class="invitacion">
+            <div class="invitacion-layer">
 
-<audio id="invitacion-audio" src="/assets/invitaciones/bodas/sounds/una historia de amor.mp3" preload="metadata" loop></audio>
+            </div>
 
+          </div>
 
+          <div id="espectro" class="espectro" role="button" aria-pressed="false" tabindex="0"
+            title="Tocar para reproducir">
+            <canvas id="waveform-canvas"></canvas>
+            <div id="estado-texto" class="estado-texto">▶ Reproducir</div>
+          </div>
 
-
+          <audio id="invitacion-audio" src="/assets/invitaciones/bodas/sounds/una historia de amor.mp3"
+            preload="metadata" loop></audio>
+        </div>
+      </div>
     </div>
-  </div>
+
+  </section>
+
+  <section class="invitacionSeccion" id="ceremonia">
+    <div class="invitacion-web">
+      <div class="overlay"></div>
+
+      <div class="contenedor">
+        <!-- Columna Izquierda -->
+        <div class="columna texto">
+          <h2 class="nombres">Nataly & Mario</h2>
+          <div class="texto-principal">El amor nos ha traído hasta aquí, y queremos celebrarlo contigo.</div>
+
+          <div class="iconos">
+            <i class="bi bi-house" onclick="abrirSeccion('principal')"></i>
+            {% include menu-boda.html %}
+          </div>
+          <div class="fecha">13 de diciembre · 2025 · Hacienda Santa Rosa</div>
+        </div>
+
+        <!-- Columna Derecha -->
+        <div class="columna">
+          <div class="data">
+            <div class="day">Sábado</div>
+            <div class="number">12</div>
+            <div class="month">Diciembre</div>
+            <div class="time">3:30 pm</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <section class="invitacionSeccion" id="ubicacion">
+    <div class="invitacion-web">
+      <div class="overlay"></div>
+
+      <div class="contenedor">
+        <!-- Columna Izquierda -->
+        <div class="columna texto">
+          <h2 class="nombres">Nataly & Mario</h2>
+          <div class="itinerario-title">Ceremonia Religiosa</div>
+
+
+          <div class="iconos">
+            <i class="bi bi-house" onclick="abrirSeccion('principal')"></i>
+            {% include menu-boda.html %}
+          </div>
+          <div class="fecha">13 de diciembre · 2025 · Hacienda Santa Rosa</div>
+        </div>
+
+        <!-- Columna Derecha -->
+        <div class="columna">
+          <!-- Controles de navegación -->
+          <div class="selector-itinerario">
+            <i class="bi bi-chevron-compact-up" id="btn-anterior" onclick="eventoAnterior()"></i>
+            <div class="data" id="data-evento"></div>
+            <i class="bi bi-chevron-compact-down" id="btn-siguiente" onclick="eventoSiguiente()"></i>
+          </div>
+
+          <!-- Contenido dinámico -->
+          
+        </div>
+      </div>
+  </section>
+
 </div>
-
-<!-- Modal -->
-<div id="modal" class="modal" onclick="cerrarModal()">
-  <div class="modal-contenido" onclick="event.stopPropagation()">
-    <span class="cerrar" onclick="cerrarModal()">&times;</span>
-    <div id="contenido-modal"></div>
-  </div>
-</div>
-
-<!-- Modales -->
-<div id="modal" class="modal" onclick="cerrarModal()">
-  <div class="modal-contenido" onclick="event.stopPropagation()">
-    <span class="cerrar" onclick="cerrarModal()">&times;</span>
-    <div id="contenido-modal"></div>
-  </div>
-</div>
-
-
-
 
 <script>
-const frases = [
-  "7 Días Faltan",
-  "Una historia de amor comienza",
-  "Con la bendición de nuestros padres",
-  "Y el apoyo de nuestros padrinos"
-];
+  document.addEventListener("DOMContentLoaded", () => {
+    // Mostrar la sección principal al cargar
+    abrirSeccion('principal');
+    // Inicializar el slider de ubicación
+    if (document.getElementById('ubicacion')) {
+    actualizarEvento();
+  }
+  });
 
-let index = 0;
-const texto = document.getElementById("texto-principal");
+  function abrirSeccion(nombre) {
+    // Ocultar todas las secciones
+    document.querySelectorAll('.invitacionSeccion').forEach(seccion => {
+      seccion.classList.remove('active');
+    });
 
-setInterval(() => {
-  texto.style.opacity = 0;
-  setTimeout(() => {
-    index = (index + 1) % frases.length;
-    texto.textContent = frases[index];
-    texto.style.opacity = 1;
-  }, 1000);
-}, 4000);
+    // Mostrar la sección solicitada
+    const seccion = document.getElementById(nombre);
+    if (seccion) {
+      seccion.classList.add('active');
+    } else {
+      console.warn(`Sección "${nombre}" no encontrada.`);
+    }
+  }
 
-// Modales
-function abrirModal(tipo) {
-  const contenido = {
-    ceremonia: "<h2>Detalles de la Ceremonia</h2><p>12 de diciembre, 5:00 PM</p>",
-    mesa: "<h2>Mesa de regalos</h2><p>Liverpool · Amazon</p>",
-    regalos: "<h2>Regalos</h2><p>Tu presencia es nuestro mejor regalo ❤️</p>",
-    padrinos: "<h2>Padrinos</h2><p>Juan & María</p>",
-    ubicacion: "<h2>Ubicación</h2><p>Hacienda Santa Rosa</p>",
-    galeria: "<h2>Galería</h2><p>Próximamente...</p>"
-  };
+  // Hacer la función accesible globalmente (para onclick en HTML)
+  window.abrirSeccion = abrirSeccion;
 
-  document.getElementById("contenido-modal").innerHTML = contenido[tipo] || "";
-  document.getElementById("modal").style.display = "flex";
-}
+  const eventos = [
+    {
+      titulo: "Ceremonia Religiosa",
+      title: "Parroquia de San Agustín",
+      hour: "3:30 pm",
+      location: "Polanco, Miguel Hidalgo, Ciudad de México.",
+      mapa: "https://maps.app.goo.gl/KpxffvAjnToURAqv5"
+    },
+    {
+      titulo: "Recepción del evento",
+      title: "La Hacienda Santa Rosa",
+      hour: "5:30 pm",
+      location: "Bahía de Todos los Santos 106, Col. Verónica Anzures, Miguel Hidalgo, Ciudad de México.",
+      mapa: "https://maps.app.goo.gl/tu-link-real" // ¡actualiza este link!
+    }
+    // Agrega más si necesitas: cena, coctel, etc.
+  ];
 
-function cerrarModal() {
-  document.getElementById("modal").style.display = "none";
-}
+  let indiceEvento = 0;
+
+  // Función para actualizar la UI
+  function actualizarEvento() {
+    const evento = eventos[indiceEvento];
+
+    // Actualizar título
+    document.querySelector('#ubicacion .itinerario-title').textContent = evento.titulo;
+
+    // Actualizar contenido
+    document.getElementById('data-evento').innerHTML = `
+    <div class="title">${evento.title}</div>
+    <div class="hour">${evento.hour}</div>
+    <div class="location">${evento.location}</div>
+    <a href="${evento.mapa}" target="_blank" class="btn btn-outline-light rounded-4 mt-3 px-4">Ver mapa</a>
+  `;
+
+    // Habilitar/deshabilitar flechas
+    const btnAnterior = document.getElementById('btn-anterior');
+    const btnSiguiente = document.getElementById('btn-siguiente');
+
+    if (btnAnterior && btnSiguiente) {
+      btnAnterior.style.opacity = indiceEvento === 0 ? '0.3' : '1';
+      btnAnterior.style.pointerEvents = indiceEvento === 0 ? 'none' : 'auto';
+
+      btnSiguiente.style.opacity = indiceEvento === eventos.length - 1 ? '0.3' : '1';
+      btnSiguiente.style.pointerEvents = indiceEvento === eventos.length - 1 ? 'none' : 'auto';
+    }
+  }
+
+  // Funciones de navegación
+  function eventoAnterior() {
+    if (indiceEvento > 0) {
+      indiceEvento--;
+      actualizarEvento();
+    }
+  }
+
+  function eventoSiguiente() {
+    if (indiceEvento < eventos.length - 1) {
+      indiceEvento++;
+      actualizarEvento();
+    }
+  }
+
+
+  const frases = [
+
+    "Una historia de amor comienza",
+    "Con la bendición de nuestros padres",
+    "Padres de la Novia",
+    "Sr. Jorge Vázquez Arenas",
+    "Sra. Karla Segovia Luna",
+    "Padres del Novio",
+    "Sr. Pablo Trujillo Pérez",
+    "Sra. Cristina Lara Abarca",
+    "Y el apoyo de nuestros padrinos",
+    "Sr. Christopher Díaz Ayala",
+    "Sra. Andrea Mendoza Valencia",
+  ];
+
+  let index = 0;
+  const texto = document.getElementById("texto-principal");
+
+  setInterval(() => {
+    texto.style.opacity = 0;
+    setTimeout(() => {
+      index = (index + 1) % frases.length;
+      texto.textContent = frases[index];
+      texto.style.opacity = 1;
+    }, 1000);
+  }, 4000);
 </script>
 
+
 <script>
-document.addEventListener('DOMContentLoaded', async () => {
-  const espectro = document.getElementById('espectro');
-  const canvas = document.getElementById('waveform-canvas');
-  const audioEl = document.getElementById('invitacion-audio');
-  const estadoTexto = document.getElementById('estado-texto');
+  document.addEventListener('DOMContentLoaded', async () => {
+    const espectro = document.getElementById('espectro');
+    const canvas = document.getElementById('waveform-canvas');
+    const audioEl = document.getElementById('invitacion-audio');
+    const estadoTexto = document.getElementById('estado-texto');
 
-  let audioCtx = null;
-  let buffer = null;
-  let isPlaying = false;
-  let currentTime = 0;
-  let duration = 0;
-  let animationId = null;
+    let audioCtx = null;
+    let buffer = null;
+    let isPlaying = false;
+    let currentTime = 0;
+    let duration = 0;
+    let animationId = null;
 
-  // Ajustar canvas al tamaño del contenedor
-  function resizeCanvas() {
-    const containerWidth = espectro.clientWidth;
-    canvas.width = containerWidth;
-    canvas.height = 60;
-    if (buffer) drawWaveform(buffer); // Redibujar si ya hay buffer
-  }
-
-  window.addEventListener('resize', resizeCanvas);
-  resizeCanvas();
-
-  async function loadAudioBuffer() {
-    try {
-      const response = await fetch(audioEl.src);
-      const arrayBuffer = await response.arrayBuffer();
-      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      buffer = await audioCtx.decodeAudioData(arrayBuffer);
-      duration = buffer.duration;
-      drawWaveform(buffer);
-      updateProgressLine(0); // Mostrar línea en posición inicial
-    } catch (err) {
-      console.error('Error cargando audio:', err);
-      estadoTexto.textContent = '⚠ Audio no disponible';
+    // Ajustar canvas al tamaño del contenedor
+    function resizeCanvas() {
+      const containerWidth = espectro.clientWidth;
+      canvas.width = containerWidth;
+      canvas.height = 60;
+      if (buffer) drawWaveform(buffer); // Redibujar si ya hay buffer
     }
-  }
 
-  function drawWaveform(buffer) {
-    const ctx = canvas.getContext('2d');
-    const { width, height } = canvas;
-    const data = buffer.getChannelData(0); // solo canal izquierdo
-    const step = Math.ceil(data.length / width);
-    const amp = height / 2;
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
 
-    ctx.clearRect(0, 0, width, height);
-    ctx.fillStyle = '#fff';
-
-    for (let i = 0; i < width; i++) {
-      const index = Math.floor(i * step);
-      const value = Math.abs(data[index] || 0);
-      const barHeight = Math.max(1, value * amp);
-      ctx.fillRect(i, height / 2 - barHeight / 2, 1, barHeight);
-    }
-  }
-
-  function updateProgressLine(time) {
-    const ctx = canvas.getContext('2d');
-    const { width, height } = canvas;
-    const progress = time / duration;
-    const xPos = Math.floor(progress * width);
-
-    // Dibujar línea de progreso (solo la línea, sin borrar el waveform)
-    ctx.fillStyle = 'rgba(255,255,255,0.7)';
-    ctx.fillRect(xPos, 0, 1, height);
-
-    // Mostrar tiempos
-    const formatTime = (t) => {
-      const mins = Math.floor(t / 60).toString().padStart(2, '0');
-      const secs = Math.floor(t % 60).toString().padStart(2, '0');
-      return `${mins}:${secs}`;
-    };
-
-    ctx.fillStyle = '#fff';
-    ctx.font = '10px Arial';
-    ctx.textAlign = 'left';
-    ctx.fillText(formatTime(time), 5, 12);
-    ctx.textAlign = 'right';
-    ctx.fillText(formatTime(duration), width - 5, 12);
-  }
-
-  function animateProgress() {
-    if (!isPlaying) return;
-
-    currentTime = audioEl.currentTime;
-    const ctx = canvas.getContext('2d');
-    const { width, height } = canvas;
-
-    // Limpiar solo la zona de la línea anterior (optimización)
-    // O simplemente redibujar todo (más simple y funciona bien)
-    drawWaveform(buffer); // Volver a dibujar el waveform
-    updateProgressLine(currentTime); // Dibujar nueva línea
-
-    animationId = requestAnimationFrame(animateProgress);
-  }
-
-  async function togglePlay() {
-    try {
-      if (!buffer) {
-        await loadAudioBuffer();
-        if (!buffer) return;
-      }
-
-      if (isPlaying) {
-        audioEl.pause();
-        espectro.classList.remove('playing');
-        estadoTexto.textContent = '▶ Reproducir';
-        isPlaying = false;
-        if (animationId) cancelAnimationFrame(animationId);
-        // Volver a dibujar el waveform sin línea móvil (solo línea fija en posición actual)
+    async function loadAudioBuffer() {
+      try {
+        const response = await fetch(audioEl.src);
+        const arrayBuffer = await response.arrayBuffer();
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        buffer = await audioCtx.decodeAudioData(arrayBuffer);
+        duration = buffer.duration;
         drawWaveform(buffer);
-        updateProgressLine(currentTime);
-      } else {
-        if (audioCtx.state === 'suspended') {
-          await audioCtx.resume();
-        }
-
-        // Reiniciar si llegó al final
-        if (currentTime >= duration) {
-          audioEl.currentTime = 0;
-          currentTime = 0;
-        }
-
-        await audioEl.play();
-        espectro.classList.add('playing');
-        estadoTexto.textContent = '⏸ Pausa';
-        isPlaying = true;
-        animateProgress();
+        updateProgressLine(0); // Mostrar línea en posición inicial
+      } catch (err) {
+        console.error('Error cargando audio:', err);
+        estadoTexto.textContent = '⚠ Audio no disponible';
       }
-    } catch (err) {
-      console.error('Error al reproducir:', err);
-      estadoTexto.textContent = '⚠ No se pudo reproducir';
-      espectro.classList.remove('playing');
-      isPlaying = false;
     }
-  }
 
- // Cargar audio y, si es posible, reproducir automáticamente
-loadAudioBuffer().then(() => {
-  // Opcional: intentar reproducir automáticamente
-  // Esto puede fallar silenciosamente si el navegador lo bloquea
-  togglePlay().catch(() => {
-    // Si falla, no pasa nada; el usuario puede tocar para reproducir
-    estadoTexto.textContent = '▶ Tocar para reproducir';
-  });
-});
-  // Eventos
-  espectro.addEventListener('click', (e) => {
-    e.preventDefault();
-    togglePlay();
-  });
+    function drawWaveform(buffer) {
+      const ctx = canvas.getContext('2d');
+      const { width, height } = canvas;
+      const data = buffer.getChannelData(0); // solo canal izquierdo
+      const step = Math.ceil(data.length / width);
+      const amp = height / 2;
 
-  espectro.addEventListener('keydown', (e) => {
-    if (e.key === ' ' || e.key === 'Enter') {
+      ctx.clearRect(0, 0, width, height);
+      ctx.fillStyle = '#fff';
+
+      for (let i = 0; i < width; i++) {
+        const index = Math.floor(i * step);
+        const value = Math.abs(data[index] || 0);
+        const barHeight = Math.max(1, value * amp);
+        ctx.fillRect(i, height / 2 - barHeight / 2, 1, barHeight);
+      }
+    }
+
+    function updateProgressLine(time) {
+      const ctx = canvas.getContext('2d');
+      const { width, height } = canvas;
+      const progress = time / duration;
+      const xPos = Math.floor(progress * width);
+
+      // Dibujar línea de progreso (solo la línea, sin borrar el waveform)
+      ctx.fillStyle = 'rgba(255,255,255,0.7)';
+      ctx.fillRect(xPos, 0, 1, height);
+
+      // Mostrar tiempos
+      const formatTime = (t) => {
+        const mins = Math.floor(t / 60).toString().padStart(2, '0');
+        const secs = Math.floor(t % 60).toString().padStart(2, '0');
+        return `${mins}:${secs}`;
+      };
+
+      ctx.fillStyle = '#fff';
+      ctx.font = '10px Arial';
+      ctx.textAlign = 'left';
+      ctx.fillText(formatTime(time), 5, 12);
+      ctx.textAlign = 'right';
+      ctx.fillText(formatTime(duration), width - 5, 12);
+    }
+
+    function animateProgress() {
+      if (!isPlaying) return;
+
+      currentTime = audioEl.currentTime;
+      const ctx = canvas.getContext('2d');
+      const { width, height } = canvas;
+
+      // Limpiar solo la zona de la línea anterior (optimización)
+      // O simplemente redibujar todo (más simple y funciona bien)
+      drawWaveform(buffer); // Volver a dibujar el waveform
+      updateProgressLine(currentTime); // Dibujar nueva línea
+
+      animationId = requestAnimationFrame(animateProgress);
+    }
+
+    async function togglePlay() {
+      try {
+        if (!buffer) {
+          await loadAudioBuffer();
+          if (!buffer) return;
+        }
+
+        if (isPlaying) {
+          audioEl.pause();
+          espectro.classList.remove('playing');
+          estadoTexto.textContent = '▶ Reproducir';
+          isPlaying = false;
+          if (animationId) cancelAnimationFrame(animationId);
+          // Volver a dibujar el waveform sin línea móvil (solo línea fija en posición actual)
+          drawWaveform(buffer);
+          updateProgressLine(currentTime);
+        } else {
+          if (audioCtx.state === 'suspended') {
+            await audioCtx.resume();
+          }
+
+          // Reiniciar si llegó al final
+          if (currentTime >= duration) {
+            audioEl.currentTime = 0;
+            currentTime = 0;
+          }
+
+          await audioEl.play();
+          espectro.classList.add('playing');
+          estadoTexto.textContent = '⏸ Pausa';
+          isPlaying = true;
+          animateProgress();
+        }
+      } catch (err) {
+        console.error('Error al reproducir:', err);
+        estadoTexto.textContent = '⚠ No se pudo reproducir';
+        espectro.classList.remove('playing');
+        isPlaying = false;
+      }
+    }
+
+    // Cargar audio y, si es posible, reproducir automáticamente
+    loadAudioBuffer().then(() => {
+      // Opcional: intentar reproducir automáticamente
+      // Esto puede fallar silenciosamente si el navegador lo bloquea
+      togglePlay().catch(() => {
+        // Si falla, no pasa nada; el usuario puede tocar para reproducir
+        estadoTexto.textContent = '▶ Tocar para reproducir';
+      });
+    });
+    // Eventos
+    espectro.addEventListener('click', (e) => {
       e.preventDefault();
       togglePlay();
-    }
+    });
+
+    espectro.addEventListener('keydown', (e) => {
+      if (e.key === ' ' || e.key === 'Enter') {
+        e.preventDefault();
+        togglePlay();
+      }
+    });
   });
-});
 </script>
